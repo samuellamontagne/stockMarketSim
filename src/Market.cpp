@@ -20,3 +20,17 @@ void Market::addInstrument(Instruments* newInstr){
 	marketList.push_back(newInstr);
 }
 
+void Market::updateMarketPrices(){
+	double newPrice = 0;
+	double oldPrice = 0;
+	//Random factor between 0.5 and 1.5
+	double randomFactor = 0;
+	srand((unsigned)time(NULL));
+
+	for(size_t i; i < marketList.size(); i++){
+		oldPrice = marketList.at(i)->getPrice();
+		randomFactor = (double) rand()/RAND_MAX + 0.5;
+		newPrice = oldPrice * randomFactor;
+		marketList.at(i)->updatePrice(newPrice);
+	}
+}

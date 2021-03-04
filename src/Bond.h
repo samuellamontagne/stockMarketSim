@@ -11,8 +11,8 @@
 
 class Bond : public Instruments {
 public:
-	Bond();
-	virtual ~Bond();
+	Bond(string newName, double newPrice, int qte);
+	void PrintInfo();
 };
 
 #endif /* BOND_H_ */

@@ -7,12 +7,13 @@
 
 #include "Bond.h"
 
-Bond::Bond() {
+Bond::Bond(string newName, double newPrice, int qte): Instruments(newName, newPrice, qte) {
 	// TODO Auto-generated constructor stub
 
 }
 
-Bond::~Bond() {
-	// TODO Auto-generated destructor stub
+void Bond::PrintInfo(){
+	cout << "This is " << name << "'s stock." << endl;
+	cout << "The price is currently at : " << price << "$" << endl;
+	cout << "There is " << quantity << " stock available" << endl;
 }
-
