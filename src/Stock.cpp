@@ -7,12 +7,13 @@
 
 #include "Stock.h"
 
-Stock::Stock() {
-	// TODO Auto-generated constructor stub
+using namespace std;
 
-}
+Stock::Stock(string newName, double newPrice, int qte):Instruments(newName, newPrice, qte) {}
 
-Stock::~Stock() {
-	// TODO Auto-generated destructor stub
+void Stock::PrintInfo(){
+	cout << "This is " << name << "'s stock." << endl;
+	cout << "The price is currently at : " << price << "$" << endl;
+	cout << "There is " << quantity << " stock available" << endl;
 }
 

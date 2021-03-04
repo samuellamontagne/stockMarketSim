@@ -7,12 +7,5 @@
 
 #include "Instruments.h"
 
-Instruments::Instruments() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Instruments::~Instruments() {
-	// TODO Auto-generated destructor stub
-}
+Instruments::Instruments(string newName, double newPrice, int qte):name(newName), price(newPrice), quantity(qte) {}
 

@@ -11,8 +11,8 @@
 
 class Stock : public Instruments {
 public:
-	Stock();
-	virtual ~Stock();
+	Stock(string newName, double newPrice, int qte);
+	void PrintInfo();
 };
 
 #endif /* STOCK_H_ */

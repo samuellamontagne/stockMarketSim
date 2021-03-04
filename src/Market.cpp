@@ -8,11 +8,15 @@
 #include "Market.h"
 
 Market::Market() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Market::~Market() {
-	// TODO Auto-generated destructor stub
+	for(size_t i; i < marketList.size(); i++){
+		delete marketList.at(i);
+	}
+}
+
+void Market::addInstrument(Instruments* newInstr){
+	marketList.push_back(newInstr);
 }
 
