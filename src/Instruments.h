@@ -19,7 +19,17 @@ public:
 
 	virtual void PrintInfo() const = 0;
 
-	void updatePrice(double newPrice);
+    const string &getName() const;
+
+    void setName(const string &name);
+
+
+
+    int getQuantity() const;
+
+    void setQuantity(int quantity);
+
+    void updatePrice(double newPrice);
 	double getPrice();
 
 protected:

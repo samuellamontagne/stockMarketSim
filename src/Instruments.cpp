@@ -9,6 +9,25 @@
 
 Instruments::Instruments(string newName, double newPrice, int qte):name(newName), price(newPrice), quantity(qte) {}
 
+
+
+
+int Instruments::getQuantity() const {
+    return quantity;
+}
+
+void Instruments::setQuantity(int quantity) {
+    Instruments::quantity = quantity;
+}
+
+const string &Instruments::getName() const {
+    return name;
+}
+
+void Instruments::setName(const string &name) {
+    Instruments::name = name;
+}
+
 void Instruments::updatePrice(double newPrice){
 	price = newPrice;
 }
@@ -16,3 +35,6 @@ void Instruments::updatePrice(double newPrice){
 double Instruments::getPrice(){
 	return price;
 }
+
+
+
