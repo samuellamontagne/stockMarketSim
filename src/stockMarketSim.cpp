@@ -27,6 +27,8 @@ int main() {
 
     vector<Instruments>marketList;
 
+
+
 	//Every chunk of time for all the chunks of time (NB_DAYS_SIM/INCREMENT_SIM)
 	//We give the player options to buy and/or sell stocks
 	//then we update the market prices and

@@ -23,7 +23,6 @@ public:
 
     void  sell(Instruments &instrument, double price, int quantity);
 
-
     void buy(Instruments *instrument, double price, int quantity);
 };
 

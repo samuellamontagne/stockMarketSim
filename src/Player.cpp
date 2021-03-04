@@ -27,8 +27,9 @@ void Player::buy(Instruments* instrument, double price, int quantity) {
             }
         }
         //no has this object
-        Instruments* it;
+        Instruments* it = instrument;
         it->setQuantity(quantity);
+        it->updatePrice(price);
         playerAccount.push_back(it);
     }else{
         cout << "not enough cash;" <<endl;
@@ -58,8 +59,8 @@ const vector<Instruments *> &Player::getPlayerAccount() const {
     return playerAccount;
 }
 
-void Player::setPlayerAccount(const vector<Instruments *> &playerAccount) {
-    Player::playerAccount = playerAccount;
+void Player::setPlayerAccount(const vector<Instruments *> &list) {
+    Player::playerAccount = list;
 }
 
 
