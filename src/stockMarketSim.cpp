@@ -12,7 +12,7 @@
 #include "Stock.h"
 #include "Bond.h"
 #include "Market.h"
-#include "Player.h"
+#include "Customer.h"
 #include <typeinfo>
 
 #define MARKET_PERCENTAGE 0.1;
@@ -39,21 +39,21 @@ int main() {
     stockMarket.addInstrument(teslaBond);
     stockMarket.addInstrument(berkshireStock);
 
-	string playerName;
+	string customerName;
 
 
-	Player player;
-    player.buy(teslaStock,10,100);
-	cout << "current cash:"<<player.getCash() << endl;
-	cout << "current asset:"<<player.calculateAsset(stockMarket.getMarketList()) << endl;
-	cout << "current profit:"<<player.getProfile(stockMarket.getMarketList()) << endl;
+	Customer customer;
+    customer.buy(teslaStock,10,100);
+	cout << "current cash:"<<customer.getCash() << endl;
+	cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
+	cout << "current profit:"<<customer.getProfile(stockMarket.getMarketList()) << endl;
 	cout << "current tesla volume:"<<teslaStock->getQuantity() << endl;
 
 	teslaStock->updatePrice(20);
 
-    cout << "current cash:"<<player.getCash() << endl;
-    cout << "current asset:"<<player.calculateAsset(stockMarket.getMarketList()) << endl;
-    cout << "current profit:"<<player.getProfile(stockMarket.getMarketList()) << endl;
+    cout << "current cash:"<<customer.getCash() << endl;
+    cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
+    cout << "current profit:"<<customer.getProfile(stockMarket.getMarketList()) << endl;
 
 
 //
@@ -61,9 +61,9 @@ int main() {
 //
 //	cout << "What is your name ?" << endl;
 //
-//	cin >> playerName;
+//	cin >> customerName;
 //
-//	cout << "Hi, " << playerName << endl;
+//	cout << "Hi, " << customerName << endl;
 	//RELOOK AT THIS LINE
 	//cout << "This simulation will last " << NB_DAYS_SIM << "days and will be updated " << 1/INCREMENT_SIM << " times per day." << endl;
 
@@ -72,7 +72,7 @@ int main() {
 
 
 	//Every chunk of time for all the chunks of time (NB_DAYS_SIM/INCREMENT_SIM)
-	//We give the player options to buy and/or sell stocks
+	//We give the customer options to buy and/or sell stocks
 	//then we update the market prices and
 	//Start a second day
 

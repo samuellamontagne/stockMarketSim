@@ -2,29 +2,29 @@
 // Created by hello on 2021-03-05.
 //
 
-#include "Player.h"
+#include "Customer.h"
 #include "Stock.h"
 #include <typeinfo>
 
-double Player::getCash() const {
+double Customer::getCash() const {
     return cash;
 }
 
-void Player::setCash(double cash) {
-    Player::cash = cash;
+void Customer::setCash(double cash) {
+    Customer::cash = cash;
 }
 
 
-void Player::buy(Instruments* instrument, double price, int volume) {
+void Customer::buy(Instruments* instrument, double price, int volume) {
     if(price*volume <= cash) {
         cash-=price*volume;
         // on market side
 
 
         instrument->setQuantity(instrument->getQuantity()-volume);
-        // on player side
+        // on customer side
          // has this object
-        for (auto & i : playerAccount) {
+        for (auto & i : customerAccount) {
             if(i->getName() == instrument->getName()){
                 i->setQuantity(i->getQuantity()-volume);
                 return;
@@ -42,7 +42,7 @@ void Player::buy(Instruments* instrument, double price, int volume) {
         it->setQuantity(volume);
         it->updatePrice(price);
         it->setName(instrument->getName());
-        playerAccount.push_back(it);
+        customerAccount.push_back(it);
     }else{
         cout << "not enough cash;" <<endl;
     }
@@ -50,17 +50,17 @@ void Player::buy(Instruments* instrument, double price, int volume) {
 
 
 
-void Player::sell(Instruments &instrument, double price, int volume) {
-    for (int i =0 ;i < playerAccount.size();i++) {
-        if(playerAccount.at(i)->getName() == instrument.getName() ){
-            // if player have enough quantity player could sell
-            if(playerAccount.at(i)->getQuantity() > volume){  // still have this object
+void Customer::sell(Instruments &instrument, double price, int volume) {
+    for (int i =0 ;i < customerAccount.size();i++) {
+        if(customerAccount.at(i)->getName() == instrument.getName() ){
+            // if customer have enough quantity customer could sell
+            if(customerAccount.at(i)->getQuantity() > volume){  // still have this object
                 instrument.setQuantity(instrument.getQuantity()+volume);
-                playerAccount.at(i)->setQuantity(playerAccount.at(i)->getQuantity()-volume);
+                customerAccount.at(i)->setQuantity(customerAccount.at(i)->getQuantity()-volume);
                 cash+=price*volume;
                 break;
-            } else if(playerAccount.at(i)->getQuantity() == volume){ // not have this stock
-                playerAccount.erase(playerAccount.begin()+i);  // remove from playerAccount
+            } else if(customerAccount.at(i)->getQuantity() == volume){ // not have this stock
+                customerAccount.erase(customerAccount.begin()+i);  // remove from customerAccount
                 cash+=price*volume;
                 break;
             }
@@ -73,20 +73,20 @@ void Player::sell(Instruments &instrument, double price, int volume) {
     }
 }
 
-const vector<Instruments *> &Player::getPlayerAccount() const {
-    return playerAccount;
+const vector<Instruments *> &Customer::getcustomerAccount() const {
+    return customerAccount;
 }
 
-void Player::setPlayerAccount(const vector<Instruments *> &list) {
-    Player::playerAccount = list;
+void Customer::setcustomerAccount(const vector<Instruments *> &list) {
+    Customer::customerAccount = list;
 }
 
-double Player::calculateAsset(const vector<struct Instruments *> list) const {
-    if(playerAccount.empty()){
+double Customer::calculateAsset(const vector<struct Instruments *> list) const {
+    if(customerAccount.empty()){
         return cash;
     }else{
         double subtotal=0;
-        for (auto i : playerAccount) {
+        for (auto i : customerAccount) {
             for (auto j : list) {
                 if(i->getName()==j->getName()){
                     subtotal+=i->getQuantity()*j->getPrice();
@@ -101,8 +101,8 @@ double Player::calculateAsset(const vector<struct Instruments *> list) const {
 
 
 
-double Player::getProfile(const vector<struct Instruments *> list) const {
-    if(playerAccount.empty()){
+double Customer::getProfile(const vector<struct Instruments *> list) const {
+    if(customerAccount.empty()){
        return cash-STARTING_CASH;
     }else{
       return  calculateAsset(list)-STARTING_CASH;
@@ -110,7 +110,7 @@ double Player::getProfile(const vector<struct Instruments *> list) const {
 
 }
 
-Instruments* Player::creatClassByString(string str) {
+Instruments* Customer::creatClassByString(string str) {
     if(str=="stock"){
         return new Stock("none",1.0,1);
     }else if(str== "bond"){
