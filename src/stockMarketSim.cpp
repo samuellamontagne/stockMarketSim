@@ -13,7 +13,7 @@
 #include "Bond.h"
 #include "Market.h"
 #include "Customer.h"
-#include <typeinfo>
+
 
 #define MARKET_PERCENTAGE 0.1;
 //Example NB_DAY_SIM = 10 and Increment = 1, is 10 days incrementing every days
