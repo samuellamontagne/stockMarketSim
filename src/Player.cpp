@@ -39,8 +39,6 @@ void Player::buy(Instruments* instrument, double price, int volume) {
             }
         }
         Instruments* it =  creatClassByString(result);
-        Instruments* tt =  &*instrument;
-
         it->setQuantity(volume);
         it->updatePrice(price);
         it->setName(instrument->getName());

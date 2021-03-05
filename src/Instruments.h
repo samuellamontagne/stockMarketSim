@@ -17,6 +17,7 @@ public:
 	Instruments(string newName, double newPrice, int qte);
 	virtual ~Instruments(){};
 
+    Instruments(const Instruments&  instrument);
 	virtual void PrintInfo() const = 0;
 
     const string &getName() const;

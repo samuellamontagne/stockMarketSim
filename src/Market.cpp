@@ -34,3 +34,11 @@ void Market::updateMarketPrices(){
 		marketList.at(i)->updatePrice(newPrice);
 	}
 }
+
+const vector<Instruments *> &Market::getMarketList() const {
+	return marketList;
+}
+
+void Market::setMarketList(const vector<Instruments *> &marketList) {
+	Market::marketList = marketList;
+}

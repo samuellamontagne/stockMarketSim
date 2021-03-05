@@ -19,7 +19,12 @@ private:
 	vector<Instruments*> marketList;
 public:
 	Market();
-	virtual ~Market();
+
+    const vector<Instruments *> &getMarketList() const;
+
+    void setMarketList(const vector<Instruments *> &marketList);
+
+    virtual ~Market();
 	void addInstrument(Instruments* newInstr);
 	//Update market function every time chunks should start from last day's price and wiggle it a little
 	void updateMarketPrices();
