@@ -46,6 +46,7 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
         it->setQuantity(volume);
         it->updatePrice(price);
         it->setName(instrument->getName());
+
         instrumentsHoldList.push_back(it);
         cout << "Great, you bought " << it->getQuantity() << " instruments of " << it->getName() << endl;
     }else{
