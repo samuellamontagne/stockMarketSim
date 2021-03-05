@@ -11,8 +11,8 @@ double Customer::getCash() const {
     return cash;
 }
 
-void Customer::setCash(double cash) {
-    Customer::cash = cash;
+void Customer::setCash(double inputCash) {
+    Customer::cash = inputCash;
 }
 
 
@@ -25,7 +25,7 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
         instrument->setQuantity(instrument->getQuantity()-volume);
         // on customer side
          // has this object
-        for (auto & i : customerAccount) {
+        for (auto & i : instrumentsHoldList) {
             if(i->getName() == instrument->getName()){
                 i->setQuantity(i->getQuantity()-volume);
                 return;
@@ -43,7 +43,7 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
         it->setQuantity(volume);
         it->updatePrice(price);
         it->setName(instrument->getName());
-        customerAccount.push_back(it);
+        instrumentsHoldList.push_back(it);
         cout << "Great, you bought " << it->getQuantity() << " instruments of " << it->getName() << endl;
     }else{
         cout << "You do not have enough cash to buy this much at this price" <<endl;
@@ -53,17 +53,17 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
 
 
 void Customer::sell(Instruments* instrument, double price, int volume) {
-    for (int i =0 ;i < customerAccount.size();i++) {
-        if(customerAccount.at(i)->getName() == instrument->getName() ){
+    for (int i =0 ; i < instrumentsHoldList.size(); i++) {
+        if(instrumentsHoldList.at(i)->getName() == instrument->getName() ){
             // if customer have enough quantity customer could sell
-            if(customerAccount.at(i)->getQuantity() > volume){  // still have this object
+            if(instrumentsHoldList.at(i)->getQuantity() > volume){  // still have this object
                 instrument->setQuantity(instrument->getQuantity()+volume);
-                customerAccount.at(i)->setQuantity(customerAccount.at(i)->getQuantity()-volume);
+                instrumentsHoldList.at(i)->setQuantity(instrumentsHoldList.at(i)->getQuantity() - volume);
                 cash+=price*volume;
                 cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
-            } else if(customerAccount.at(i)->getQuantity() == volume){ // not have this stock
-                customerAccount.erase(customerAccount.begin()+i);  // remove from customerAccount
+            } else if(instrumentsHoldList.at(i)->getQuantity() == volume){ // not have this stock
+                instrumentsHoldList.erase(instrumentsHoldList.begin() + i);  // remove from instrumentsHoldList
                 cash+=price*volume;
                 cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
@@ -77,20 +77,20 @@ void Customer::sell(Instruments* instrument, double price, int volume) {
     }
 }
 
-const vector<Instruments *> &Customer::getCustomerAccount() const {
-    return customerAccount;
+const vector<Instruments *> &Customer::getInstrumentsHoldList() const {
+    return instrumentsHoldList;
 }
 
-void Customer::setCustomerAccount(const vector<Instruments *> &list) {
-    Customer::customerAccount = list;
+void Customer::setInstrumentsHoldList(const vector<Instruments *> &list) {
+    Customer::instrumentsHoldList = list;
 }
 
 double Customer::calculateAsset(const vector<struct Instruments *>& list) const {
-    if(customerAccount.empty()){
+    if(instrumentsHoldList.empty()){
         return cash;
     }else{
         double subtotal=0;
-        for (auto i : customerAccount) {
+        for (auto i : instrumentsHoldList) {
             for (auto j : list) {
                 if(i->getName()==j->getName()){
                     subtotal+=i->getQuantity()*j->getPrice();
@@ -106,7 +106,7 @@ double Customer::calculateAsset(const vector<struct Instruments *>& list) const 
 
 
 double Customer::getProfit(const vector<struct Instruments *>& list) const {
-    if(customerAccount.empty()){
+    if(instrumentsHoldList.empty()){
        return cash-STARTING_CASH;
     }else{
       return  calculateAsset(list)-STARTING_CASH;
@@ -116,10 +116,10 @@ double Customer::getProfit(const vector<struct Instruments *>& list) const {
 
 double Customer::getProfit(const vector<struct Instruments *>& list , const string &instrName) const {
 
-    if(customerAccount.empty()){
+    if(instrumentsHoldList.empty()){
         return 0;
     }else{
-        for(auto i :customerAccount){
+        for(auto i :instrumentsHoldList){
            if(i->getName() ==instrName){
                for(auto j :list){
                    if(j->getName() ==instrName){
@@ -146,7 +146,7 @@ void Customer::PrintInfo(const vector<struct Instruments *>& list) const {
     cout << fixed << std::setprecision(2);
     cout << "cash: \t$" << cash << endl << "asset: \t$" << calculateAsset(list) <<endl<< "profit: $" << getProfit(list) <<endl;
     cout << "Name\t"  <<  "cost($)\t\t" <<  "value($)\t" << "volume\t\t" << "profit($)" <<endl;
-    for (auto i : customerAccount) {
+    for (auto i : instrumentsHoldList) {
         for(auto j :list){
             if(j->getName() ==i->getName()){
                 cout << i->getName()+"\t"<<i->getPrice()<<"\t\t"<<j->getPrice()<<"\t\t"<< i->getQuantity()<<"\t\t" << getProfit(list,i->getName())<<"\t" <<endl;

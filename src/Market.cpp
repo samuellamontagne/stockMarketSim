@@ -63,7 +63,7 @@ bool Market::addCustomerInMarket(Customer* custormer) {
 void Market::payInterestToCustomer( Bond* bond) {
 
     for (Customer* c : customerList) {
-        for(Instruments* i:  c->getCustomerAccount()){
+        for(Instruments* i:  c->getInstrumentsHoldList()){
            if(i->getName()==bond->getName()){
                c->setCash(c->getCash()+i->getQuantity()*bond->getInterest()/100);
            }

@@ -14,7 +14,7 @@ class Customer {
 private:
     double cash=STARTING_CASH; // start money
     double asset=STARTING_CASH;
-    vector<Instruments*> customerAccount;  // hold vary  bond stock
+    vector<Instruments*> instrumentsHoldList;  // hold vary  bond stock
     string name;
 public:
     const string &getName() const;
@@ -23,8 +23,8 @@ public:
 
 public:
     Customer(const string &name);
-    const vector<Instruments *> &getCustomerAccount() const;
-    void setCustomerAccount(const vector<Instruments *> &customerAccount);
+    const vector<Instruments *> &getInstrumentsHoldList() const;
+    void setInstrumentsHoldList(const vector<Instruments *> &InstrumentsHoldList);
     double getProfit(const vector<struct Instruments *>& list) const;
     double getProfit(const vector<struct Instruments *>& list , const string &instrName) const;
 
@@ -36,7 +36,7 @@ public:
 
     double getCash() const;
 
-    void setCash(double cash);
+    void setCash(double inputCash);
 
     double calculateAsset(const vector<struct Instruments *>& list) const;
 
