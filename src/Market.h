@@ -11,14 +11,20 @@
 #include <vector>
 #include <time.h>
 #include "Instruments.h"
+#include "Customer.h"
 
 using namespace std;
 
 class Market {
 private:
 	vector<Instruments*> marketList;
+    vector<Customer*>customerList;
 public:
 	Market();
+
+    const vector<Customer *> &getCustomerList() const;
+
+    void setCustomerList(const vector<Customer *> &customerList);
 
     const vector<Instruments *> &getMarketList() const;
 
@@ -31,6 +37,9 @@ public:
 
 	void printMarket();
 
+    void payInterestToCustomer( Bond* bond);
+
+    bool addCustomerInMarket(Customer* customer);
 	Instruments* returnInstByName(string name);
 
 };

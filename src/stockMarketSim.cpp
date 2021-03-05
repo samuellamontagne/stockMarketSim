@@ -30,7 +30,13 @@ using namespace std;
 int main() {
 
 	Stock* teslaStock = new Stock("TSLA", 10.00, 5000000);
-	Bond* teslaBond = new Bond("TSLAB", 10.00, 5000000);
+	Bond* teslaBond = new Bond("TSLAB", 100.00, 10000);
+	teslaBond->setExpireDate("2025-03-06");
+	teslaBond->setFaceValue(100);
+	teslaBond->setInterest(0.5);
+	teslaBond->setYearDuration(4);
+	teslaBond->setFrequenceOfPayInt(2);
+
 
 	Stock* berkshireStock = new Stock("BRK", 25.00, 5000000);
 	char userInput;
@@ -53,22 +59,27 @@ int main() {
     stockMarket.addInstrument(berkshireStock);
 
 
-/*	Customer customerTest("hello");
-	customerTest.buy(teslaStock,10,100);
-	cout << "current cash:"<<customerTest.getCash() << endl;
-	cout << "current asset:"<<customerTest.calculateAsset(stockMarket.getMarketList()) << endl;
-	cout << "current profit:"<<customerTest.getProfit(stockMarket.getMarketList()) << endl;
+	Customer customer("hello");
+    stockMarket.addCustomerInMarket(&customer);
+    customer.buy(teslaStock,10,100);
+	cout << "current cash:"<<customer.getCash() << endl;
+	cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
+	cout << "current profit:"<<customer.getProfit(stockMarket.getMarketList()) << endl;
 	cout << "current tesla volume:"<<teslaStock->getQuantity() << endl;
 
 	teslaStock->updatePrice(20);
 
-    cout << "current cash:"<<customerTest.getCash() << endl;
-    cout << "current asset:"<<customerTest.calculateAsset(stockMarket.getMarketList()) << endl;
-    cout << "current profit:"<<customerTest.getProfit(stockMarket.getMarketList()) << endl;
+    cout << "current cash:"<<customer.getCash() << endl;
+    cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
+    cout << "current profit:"<<customer.getProfit(stockMarket.getMarketList()) << endl;
+    customer.PrintInfo(stockMarket.getMarketList());
+    customer.buy(teslaBond,100,50);
+    stockMarket.payInterestToCustomer(teslaBond);
+    customer.PrintInfo(stockMarket.getMarketList());
 
+    customer.buy(teslaStock,20,50);
 
-    customerTest.PrintInfo(stockMarket.getMarketList());*/
-
+    customer.PrintInfo(stockMarket.getMarketList());
 
 	cout << "Hi and welcome to our stock market simulation." << endl;
 
