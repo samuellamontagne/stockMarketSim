@@ -74,6 +74,7 @@ void Customer::buy(Instruments *instrument, double price, int volume) {
 }
 
 
+
 void Customer::sell(Instruments *instrument, double price, int volume) {
     for (int i = 0; i < instrumentsHoldList.size(); i++) {
         if (instrumentsHoldList.at(i)->getName() == instrument->getName()) {

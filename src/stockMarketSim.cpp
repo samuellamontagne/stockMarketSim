@@ -120,11 +120,15 @@ int main() {
 
 		stockMarket.printMarket();
 
+		//Not able to make an Instrument* to a Bond* and access it's methods
 		bondsToPay = mainCustomer.bondsToBePaid(i+1);
+
 		for(size_t j = 0; j < bondsToPay.size(); j++){
 			stockMarket.payInterestToCustomer(bondsToPay.at(j));
 			cout << "Interest for bond: " << bondsToPay.at(j)->getName() << " has been paid !" << endl;
-			//Cash of the customer is not being updated (not bei)......
+			//Cash of the customer is not being updated (not being put in cash) ......
+			//PROBLEM FOUND : problem is when in Customer::buy, the object is not being copied properly and the attributes are lost
+
 		}
 
 		cout << endl;
