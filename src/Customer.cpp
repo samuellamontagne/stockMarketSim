@@ -36,15 +36,6 @@ void Customer::buy(Instruments *instrument, double price, int volume) {
                 return;
             }
         }
-        //no has this object
-//        string temp1 = (typeid(*instrument).name());
-//        string className;
-//        for (char c : temp1) {
-//            if (isalpha(c)) {
-//                className += tolower(c);
-//            }
-//        }
-
 
         Bond *BondCopy;
         Stock *StockCopy;
@@ -82,7 +73,7 @@ void Customer::sell(Instruments *instrument, double price, int volume) {
             if (instrumentsHoldList.at(i)->getQuantity() > volume) {  // still have this object
                 instrument->setQuantity(instrument->getQuantity() + volume);
                 instrumentsHoldList.at(i)->setQuantity(instrumentsHoldList.at(i)->getQuantity() - volume);
-                cash += price * volume;
+                cash+=price*volume;
                 cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
             } else if (instrumentsHoldList.at(i)->getQuantity() == volume) { // not have this stock
