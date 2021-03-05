@@ -81,6 +81,9 @@ int main() {
 
     customer.PrintInfo(stockMarket.getMarketList());
 
+
+
+
 	cout << "Hi and welcome to our stock market simulation." << endl;
 
 	cout << "Tell me your name !" << endl;
@@ -114,6 +117,7 @@ int main() {
 
 		//Print the person's portfolio
 		mainCustomer.PrintInfo(stockMarket.getMarketList());
+
 
 		cout << endl;
 
