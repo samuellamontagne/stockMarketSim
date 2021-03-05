@@ -17,64 +17,82 @@ void Customer::setCash(double inputCash) {
 }
 
 
-void Customer::buy(Instruments* instrument, double price, int volume) {
-	volume = volume * (1 - MARKET_PERCENTAGE);
-    if(price*volume <= cash) {
-        cash-=price*volume;
+void Customer::buy(Instruments *instrument, double price, int volume) {
+    volume = volume * (1 - MARKET_PERCENTAGE);
+    Bond *currBond= new Bond("none",1,100);
+    Stock *currStock= new Stock("none",1,100);
+    if (price * volume <= cash) {
+        cash -= price * volume;
         // on market side
 
 
-        instrument->setQuantity(instrument->getQuantity()-volume);
+        instrument->setQuantity(instrument->getQuantity() - volume);
         // on customer side
-         // has this object
-        for (auto & i : instrumentsHoldList) {
-            if(i->getName() == instrument->getName()){
-                i->updatePrice((i->getPrice()*i->getQuantity()+price*volume)/(volume+i->getQuantity()));
-                i->setQuantity(i->getQuantity()+volume);
+        // has this object
+        for (auto &i : instrumentsHoldList) {
+            if (i->getName() == instrument->getName()) {
+                i->updatePrice((i->getPrice() * i->getQuantity() + price * volume) / (volume + i->getQuantity()));
+                i->setQuantity(i->getQuantity() + volume);
                 return;
             }
         }
         //no has this object
-        string temp1=(typeid(*instrument).name());
-        string className;
-        for(char c : temp1){
-            if( isalpha(c)){
-                className+=tolower(c);
-            }
+//        string temp1 = (typeid(*instrument).name());
+//        string className;
+//        for (char c : temp1) {
+//            if (isalpha(c)) {
+//                className += tolower(c);
+//            }
+//        }
+
+
+        Bond *BondCopy;
+        Stock *StockCopy;
+        if (typeid(*instrument) == typeid(Bond)) {
+            BondCopy = (dynamic_cast<Bond *>(instrument));
+            currBond->setQuantity(volume);
+            currBond->updatePrice(price);
+            currBond->setName(BondCopy->getName());
+            currBond->setFrequenceOfPayInt(BondCopy->getFrequenceOfPayInt());
+            currBond->setInterest(BondCopy->getInterest());
+            currBond->setYearDuration(BondCopy->getYearDuration());
+            instrumentsHoldList.push_back(currBond);
+            cout << "Great, you bought " << currBond->getQuantity() << " instruments of " << currBond->getName() << endl;
+        } else if (typeid(*instrument) == typeid(Stock)) {
+            StockCopy = (dynamic_cast<Stock *>(instrument));
+            currStock->setQuantity(volume);
+            currStock->updatePrice(price);
+            currStock->setName(StockCopy->getName());
+            instrumentsHoldList.push_back(currStock);
+            cout << "Great, you bought " << currStock->getQuantity() << " instruments of " << currStock->getName() << endl;
         }
-        Instruments* it =  creatClassByString(className);
-        it->setQuantity(volume);
-        it->updatePrice(price);
-        it->setName(instrument->getName());
-        instrumentsHoldList.push_back(it);
-        cout << "Great, you bought " << it->getQuantity() << " instruments of " << it->getName() << endl;
-    }else{
-        cout << "You do not have enough cash to buy this much at this price" <<endl;
+
+    } else {
+        cout << "You do not have enough cash to buy this much at this price" <<
+             endl;
     }
 }
 
 
-
-void Customer::sell(Instruments* instrument, double price, int volume) {
-    for (int i =0 ; i < instrumentsHoldList.size(); i++) {
-        if(instrumentsHoldList.at(i)->getName() == instrument->getName() ){
+void Customer::sell(Instruments *instrument, double price, int volume) {
+    for (int i = 0; i < instrumentsHoldList.size(); i++) {
+        if (instrumentsHoldList.at(i)->getName() == instrument->getName()) {
             // if customer have enough quantity customer could sell
-            if(instrumentsHoldList.at(i)->getQuantity() > volume){  // still have this object
-                instrument->setQuantity(instrument->getQuantity()+volume);
+            if (instrumentsHoldList.at(i)->getQuantity() > volume) {  // still have this object
+                instrument->setQuantity(instrument->getQuantity() + volume);
                 instrumentsHoldList.at(i)->setQuantity(instrumentsHoldList.at(i)->getQuantity() - volume);
-                cash+=price*volume;
+                cash += price * volume;
                 cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
-            } else if(instrumentsHoldList.at(i)->getQuantity() == volume){ // not have this stock
+            } else if (instrumentsHoldList.at(i)->getQuantity() == volume) { // not have this stock
                 instrumentsHoldList.erase(instrumentsHoldList.begin() + i);  // remove from instrumentsHoldList
-                cash+=price*volume;
+                cash += price * volume;
                 cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
-            }
-            else {
+            } else {
                 cout << "You do not hold this much quantity in your account" << endl;
             }
-        } else{
+        } else {
             cout << "You do not have " << instrument->getName() << endl;
         }
     }
@@ -88,78 +106,79 @@ void Customer::setInstrumentsHoldList(const vector<Instruments *> &list) {
     Customer::instrumentsHoldList = list;
 }
 
-double Customer::calculateAsset(const vector<struct Instruments *>& list) const {
-    if(instrumentsHoldList.empty()){
+double Customer::calculateAsset(const vector<struct Instruments *> &list) const {
+    if (instrumentsHoldList.empty()) {
         return cash;
-    }else{
-        double subtotal=0;
+    } else {
+        double subtotal = 0;
         for (auto i : instrumentsHoldList) {
             for (auto j : list) {
-                if(i->getName()==j->getName()){
-                    subtotal+=i->getQuantity()*j->getPrice();
+                if (i->getName() == j->getName()) {
+                    subtotal += i->getQuantity() * j->getPrice();
                     break;
                 }
             }
 
         }
-        return cash+subtotal;
+        return cash + subtotal;
     }
 }
 
 
-
-double Customer::getProfit(const vector<struct Instruments *>& list) const {
-    if(instrumentsHoldList.empty()){
-       return cash-STARTING_CASH;
-    }else{
-      return  calculateAsset(list)-STARTING_CASH;
+double Customer::getProfit(const vector<struct Instruments *> &list) const {
+    if (instrumentsHoldList.empty()) {
+        return cash - STARTING_CASH;
+    } else {
+        return calculateAsset(list) - STARTING_CASH;
     }
 }
 
 
-double Customer::getProfit(const vector<struct Instruments *>& list , const string &instrName) const {
+double Customer::getProfit(const vector<struct Instruments *> &list, const string &instrName) const {
 
-    if(instrumentsHoldList.empty()){
+    if (instrumentsHoldList.empty()) {
         return 0;
-    }else{
-        for(auto i :instrumentsHoldList){
-           if(i->getName() ==instrName){
-               for(auto j :list){
-                   if(j->getName() ==instrName){
-                       return  (j->getPrice()-i->getPrice())*i->getQuantity();
-                   }
-               }
-           }
+    } else {
+        for (auto i :instrumentsHoldList) {
+            if (i->getName() == instrName) {
+                for (auto j :list) {
+                    if (j->getName() == instrName) {
+                        return (j->getPrice() - i->getPrice()) * i->getQuantity();
+                    }
+                }
+            }
         }
-        return  0;
+        return 0;
     }
 }
 
 
-Instruments* Customer::creatClassByString(const string& className) {
-    if(className=="stock"){
-        return new Stock("none",1.0,1);
-    }else if(className== "bond"){
-        return new Bond("none",1.0,1);
+Instruments *Customer::creatClassByString(const string &className) {
+    if (className == "stock") {
+        return new Stock("none", 1.0, 1);
+    } else if (className == "bond") {
+        return new Bond("none", 1.0, 1);
     }
 }
 
-void Customer::PrintInfo(const vector<struct Instruments *>& list) const {
+void Customer::PrintInfo(const vector<struct Instruments *> &list) const {
     cout << "Customer: " << name << endl;
     cout << fixed << std::setprecision(2);
-    cout << "cash: \t$" << cash << endl << "asset: \t$" << calculateAsset(list) <<endl<< "profit: $" << getProfit(list) <<endl;
-    cout << "Name\t"  <<  "cost($)\t\t" <<  "value($)\t" << "volume\t\t" << "profit($)" <<endl;
+    cout << "cash: \t$" << cash << endl << "asset: \t$" << calculateAsset(list) << endl << "profit: $"
+         << getProfit(list) << endl;
+    cout << "Name\t" << "cost($)\t\t" << "value($)\t" << "volume\t\t" << "profit($)" << endl;
     for (auto i : instrumentsHoldList) {
-        for(auto j :list){
-            if(j->getName() ==i->getName()){
-                cout << i->getName()+"\t"<<i->getPrice()<<"\t\t"<<j->getPrice()<<"\t\t"<< i->getQuantity()<<"\t\t" << getProfit(list,i->getName())<<"\t" <<endl;
+        for (auto j :list) {
+            if (j->getName() == i->getName()) {
+                cout << i->getName() + "\t" << i->getPrice() << "\t\t" << j->getPrice() << "\t\t" << i->getQuantity()
+                     << "\t\t" << getProfit(list, i->getName()) << "\t" << endl;
                 break;
             }
         }
     }
 }
 
-Customer::Customer( const string &name) :  name(name) {}
+Customer::Customer(const string &name) : name(name) {}
 
 const string &Customer::getName() const {
     return name;
@@ -169,22 +188,21 @@ void Customer::setName(const string &name) {
     Customer::name = name;
 }
 
-vector<Bond*> Customer::bondsToBePaid(int n){
-	vector<Bond*> rtnBondList;
-	Bond* currBond;
+vector<Bond *> Customer::bondsToBePaid(int n) {
+    vector<Bond *> rtnBondList;
+    Bond *currBond;
 
-	for(Instruments* b : instrumentsHoldList){
+    for (Instruments *b : instrumentsHoldList) {
+        if (typeid(*b) == typeid(Bond)) {
 
-		if(typeid(*b) == typeid(Bond)){
+            currBond = (dynamic_cast<Bond *>(b));
 
-			currBond = (dynamic_cast<Bond*>(b));
+            if (currBond->getFrequenceOfPayInt() % n == 0) {
+                rtnBondList.push_back(currBond);
+            }
+        }
+    }
 
-			if(currBond->getFrequenceOfPayInt() % n == 0){
-				rtnBondList.push_back(currBond);
-			}
-		}
-	}
-
-	return rtnBondList;
+    return rtnBondList;
 }
 

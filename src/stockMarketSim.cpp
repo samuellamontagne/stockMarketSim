@@ -79,6 +79,16 @@ int main() {
 
     customer.PrintInfo(stockMarket.getMarketList());
 
+//    for(Instruments* b : stockMarket.getMarketList()){
+//        if(typeid(*b) == typeid(Bond)){
+//            Bond* currBond = (dynamic_cast<Bond*>(b));
+//            cout << "----------"<<currBond->getFrequenceOfPayInt()<<endl;
+//
+//        }
+//    }
+
+
+
 
 
 
@@ -121,8 +131,8 @@ int main() {
 		cout << "And here is your portfolio:" << endl << endl;
 
 		//Print the person's portfolio
-		mainCustomer.PrintInfo(stockMarket.getMarketList());
-
+//		mainCustomer.PrintInfo(stockMarket.getMarketList());
+        mainCustomer.PrintInfo(stockMarket.getMarketList());
 
 		cout << endl;
 
