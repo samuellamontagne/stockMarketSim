@@ -44,32 +44,35 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
         it->updatePrice(price);
         it->setName(instrument->getName());
         customerAccount.push_back(it);
+        cout << "Great, you bought " << it->getQuantity() << " instruments of " << it->getName() << endl;
     }else{
-        cout << "not enough cash;" <<endl;
+        cout << "You do not have enough cash to buy this much at this price" <<endl;
     }
 }
 
 
 
-void Customer::sell(Instruments &instrument, double price, int volume) {
+void Customer::sell(Instruments* instrument, double price, int volume) {
     for (int i =0 ;i < customerAccount.size();i++) {
-        if(customerAccount.at(i)->getName() == instrument.getName() ){
+        if(customerAccount.at(i)->getName() == instrument->getName() ){
             // if customer have enough quantity customer could sell
             if(customerAccount.at(i)->getQuantity() > volume){  // still have this object
-                instrument.setQuantity(instrument.getQuantity()+volume);
+                instrument->setQuantity(instrument->getQuantity()+volume);
                 customerAccount.at(i)->setQuantity(customerAccount.at(i)->getQuantity()-volume);
                 cash+=price*volume;
+                cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
             } else if(customerAccount.at(i)->getQuantity() == volume){ // not have this stock
                 customerAccount.erase(customerAccount.begin()+i);  // remove from customerAccount
                 cash+=price*volume;
+                cout << "You sold " << volume << " of " << instrument->getName() << endl;
                 break;
             }
             else {
-                cout << " not enough quantity";
+                cout << "You do not hold this much quantity in your account" << endl;
             }
         } else{
-            cout << "You do not have " << instrument.getName() << endl;
+            cout << "You do not have " << instrument->getName() << endl;
         }
     }
 }

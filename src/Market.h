@@ -15,8 +15,6 @@
 
 using namespace std;
 
-
-
 class Market {
 private:
 	vector<Instruments*> marketList;
@@ -42,6 +40,8 @@ public:
     void payInterestToCustomer( Bond* bond);
 
     bool addCustomerInMarket(Customer* customer);
+	Instruments* returnInstByName(string name);
+
 };
 
 #endif /* MARKET_H_ */

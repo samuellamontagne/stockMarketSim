@@ -30,7 +30,7 @@ public:
 
     void PrintInfo(const vector<struct Instruments *>& list) const;
 
-    void  sell(Instruments &instrument, double price, int quantity);
+    void  sell(Instruments *instrument, double price, int quantity);
 
     void buy(Instruments *instrument, double price, int quantity);
 

@@ -29,7 +29,6 @@ using namespace std;
 
 int main() {
 
-
 	Stock* teslaStock = new Stock("TSLA", 10.00, 5000000);
 	Bond* teslaBond = new Bond("TSLAB", 100.00, 10000);
 	teslaBond->setExpireDate("2025-03-06");
@@ -42,9 +41,15 @@ int main() {
 	Stock* berkshireStock = new Stock("BRK", 25.00, 5000000);
 	char userInput;
 
+	Instruments* tempStock;
+
 
 	Market stockMarket;
 	string presentation;
+	string instrumentsName;
+	int nbToUse;
+
+	string customerName;
 	int nb_increments = 1/INCREMENT_SIM;
 	int nb_days = NB_DAYS_SIM;
 	int nb_rounds = (nb_increments * nb_days);
@@ -53,10 +58,8 @@ int main() {
     stockMarket.addInstrument(teslaBond);
     stockMarket.addInstrument(berkshireStock);
 
+
 	Customer customer("hello");
-
-    stockMarket.addCustomerInMarket(&customer);
-
     customer.buy(teslaStock,10,100);
 	cout << "current cash:"<<customer.getCash() << endl;
 	cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
@@ -72,17 +75,18 @@ int main() {
 
     customer.PrintInfo(stockMarket.getMarketList());
 
-    customer.buy(teslaBond,100,10);
-
-
-    stockMarket.payInterestToCustomer(teslaBond);
-
-    customer.PrintInfo(stockMarket.getMarketList());
-
-
-
 
 	cout << "Hi and welcome to our stock market simulation." << endl;
+
+	cout << "Tell me your name !" << endl;
+
+	cin >> customerName;
+
+	cout << "Hello, " << customerName << " and good luck !";
+
+	Customer mainCustomer(customerName);
+
+
 
 	cout << "This simulation will last " << nb_days << " days and will be updated " << nb_increments << " times per day." << endl << endl;
 	//Every chunk of time for all the chunks of time (NB_DAYS_SIM/INCREMENT_SIM)
@@ -104,15 +108,16 @@ int main() {
 		cout << "And here is your portfolio:" << endl << endl;
 
 		//Print the person's portfolio
+		mainCustomer.PrintInfo(stockMarket.getMarketList());
 
-
+		cout << endl;
 		cout << "Would you like to buy or sell today ? (y/n)" << endl;
 
 		cin >> userInput;
 
 		while(userInput != 'y' && userInput != 'n'){
 
-			cout << "This input is invalid, enter y or n" << endl;
+			cout << "This input is invalid, enter 'y' to buy/sell or 'n' to skip a day" << endl;
 
 			cin >> userInput;
 		}
@@ -120,7 +125,69 @@ int main() {
 		if(userInput == 'y'){
 
 			cout << "Great ! Would you like to buy or sell ? (b/s)" << endl;
+			while(userInput != 'b' && userInput != 's'){
 
+				cout << "This input is invalid, enter 'b' to buy or 's' to sell" << endl;
+
+				cin >> userInput;
+			}
+
+			do{
+
+				if(userInput == 'b'){
+					//what instrument to buy
+
+					cout << "What instrument would you like to buy ?(Enter the name)" << endl;
+					cin >> instrumentsName;
+
+					//how much to buy
+
+					cout << "How much would you like to buy ?" << endl;
+
+					cin >> nbToUse;
+
+					tempStock = stockMarket.returnInstByName(instrumentsName);
+
+					mainCustomer.buy(tempStock, tempStock->getPrice(), nbToUse);
+
+
+				} else if(userInput == 's'){
+					//what instrument to sell
+					cout << "What instrument would you like to sell ?(Enter the name)" << endl;
+					cin >> instrumentsName;
+
+					//how much to sell
+
+					cout << "How much would you like to sell ?" << endl;
+
+					cin >> nbToUse;
+
+					tempStock = stockMarket.returnInstByName(instrumentsName);
+
+					mainCustomer.sell(tempStock, tempStock->getPrice(), nbToUse);
+				}
+
+				//Want to buy or sell again ?
+				cout << "Do you want to buy or sell again ? (y/n)" << endl;
+				while(userInput != 'y' && userInput != 'n'){
+
+					cout << "This input is invalid, enter 'y' to buy/sell or 'n' to skip a day" << endl;
+
+					cin >> userInput;
+				}
+
+				if(userInput == 'y'){
+					cout << "Great ! Would you like to buy or sell ? (b/s)" << endl;
+					while(userInput != 'b' && userInput != 's'){
+
+						cout << "This input is invalid, enter 'b' to buy or 's' to sell" << endl;
+
+						cin >> userInput;
+					}
+				}
+
+
+			}while(userInput == 'b' || userInput == 's');
 
 
 		} else if(userInput == 'n'){
@@ -129,6 +196,8 @@ int main() {
 
 
 		//then we update the market prices
+
+		cout << "Ok, the day is over. Let's see the prices tomorrow !" << endl;
 
 		stockMarket.updateMarketPrices();
 

@@ -80,3 +80,14 @@ void Market::setCustomerList(const vector<Customer *> &customerList) {
     Market::customerList = customerList;
 }
 
+
+Instruments* Market::returnInstByName(string name){
+	Instruments* toSend;
+	for(size_t i = 0; i < marketList.size(); i++){
+		if(marketList.at(i)->getName() == name){
+			toSend = marketList.at(i);
+			break;
+		}
+	}
+	return toSend;
+}
