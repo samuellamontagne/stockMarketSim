@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/Bond.cpp \
+../src/Customer.cpp \
 ../src/Instruments.cpp \
 ../src/Market.cpp \
 ../src/Stock.cpp \
@@ -12,6 +13,7 @@ CPP_SRCS += \
 
 OBJS += \
 ./src/Bond.o \
+./src/Customer.o \
 ./src/Instruments.o \
 ./src/Market.o \
 ./src/Stock.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 CPP_DEPS += \
 ./src/Bond.d \
+./src/Customer.d \
 ./src/Instruments.d \
 ./src/Market.d \
 ./src/Stock.d \

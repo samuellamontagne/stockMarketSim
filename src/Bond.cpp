@@ -13,7 +13,11 @@ Bond::Bond(string newName, double newPrice, int qte): Instruments(newName, newPr
 }
 
 void Bond::PrintInfo() const{
-	cout << "This is " << name << "'s stock." << endl;
+	cout << "This is " << name << "'s bond." << endl;
 	cout << "The price is currently at : " << price << "$" << endl;
 	cout << "There is " << quantity << " stock available" << endl;
+}
+
+void Bond::PrintForMarket() const{
+	cout << "Name: " << name << "; Price per bond: $" << price << "; Quantity available: " << quantity << endl;
 }

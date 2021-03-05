@@ -27,7 +27,7 @@ void Market::updateMarketPrices(){
 	double randomFactor = 0;
 	srand((unsigned)time(NULL));
 
-	for(size_t i; i < marketList.size(); i++){
+	for(size_t i = 0; i < marketList.size(); i++){
 		oldPrice = marketList.at(i)->getPrice();
 		randomFactor = (double) rand()/RAND_MAX + 0.5;
 		newPrice = oldPrice * randomFactor;
@@ -41,4 +41,10 @@ const vector<Instruments *> &Market::getMarketList() const {
 
 void Market::setMarketList(const vector<Instruments *> &marketList) {
 	Market::marketList = marketList;
+}
+
+void Market::printMarket(){
+	for(size_t i = 0; i < marketList.size(); i++){
+		marketList.at(i)->PrintForMarket();
+	}
 }

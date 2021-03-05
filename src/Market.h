@@ -28,6 +28,9 @@ public:
 	void addInstrument(Instruments* newInstr);
 	//Update market function every time chunks should start from last day's price and wiggle it a little
 	void updateMarketPrices();
+
+	void printMarket();
+
 };
 
 #endif /* MARKET_H_ */

@@ -24,7 +24,7 @@ public:
 
     void setName(const string &name);
 
-
+    virtual void PrintForMarket() const = 0;
 
     int getQuantity() const;
 

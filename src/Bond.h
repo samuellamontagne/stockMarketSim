@@ -13,6 +13,7 @@ class Bond : public Instruments {
 public:
 	Bond(string newName, double newPrice, int qte);
 	void PrintInfo() const;
+	void PrintForMarket() const;
 };
 
 #endif /* BOND_H_ */

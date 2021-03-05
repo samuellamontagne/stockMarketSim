@@ -13,6 +13,7 @@ class Stock : public Instruments {
 public:
 	Stock(string newName, double newPrice, int qte);
 	void PrintInfo() const;
+	void PrintForMarket() const;
 };
 
 #endif /* STOCK_H_ */

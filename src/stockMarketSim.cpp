@@ -14,6 +14,7 @@
 #include "Market.h"
 #include "Customer.h"
 #include <typeinfo>
+#include <iomanip>
 
 #define MARKET_PERCENTAGE 0.1;
 //Example NB_DAY_SIM = 10 and Increment = 1, is 10 days incrementing every days
@@ -31,9 +32,14 @@ int main() {
 	Bond* teslaBond = new Bond("TSLAB", 10.00, 5000000);
 
 	Stock* berkshireStock = new Stock("BRK", 25.00, 5000000);
+	char userInput;
 
 
 	Market stockMarket;
+	string presentation;
+	int nb_increments = 1/INCREMENT_SIM;
+	int nb_days = NB_DAYS_SIM;
+	int nb_rounds = (nb_increments * nb_days);
 
     stockMarket.addInstrument(teslaStock);
     stockMarket.addInstrument(teslaBond);
@@ -56,25 +62,65 @@ int main() {
     cout << "current profit:"<<customer.getProfile(stockMarket.getMarketList()) << endl;
 
 
-//
-//	cout << "Hi and welcome to our stock market simulation." << endl;
-//
-//	cout << "What is your name ?" << endl;
-//
-//	cin >> customerName;
-//
-//	cout << "Hi, " << customerName << endl;
-	//RELOOK AT THIS LINE
-	//cout << "This simulation will last " << NB_DAYS_SIM << "days and will be updated " << 1/INCREMENT_SIM << " times per day." << endl;
+	cout << "Hi and welcome to our stock market simulation." << endl;
 
-
-
-
-
+	cout << "This simulation will last " << nb_days << " days and will be updated " << nb_increments << " times per day." << endl << endl;
 	//Every chunk of time for all the chunks of time (NB_DAYS_SIM/INCREMENT_SIM)
-	//We give the customer options to buy and/or sell stocks
-	//then we update the market prices and
-	//Start a second day
+
+	for(int i = 0; i < nb_rounds; i++){
+
+		cout << fixed << setprecision(2);
+
+		//We give the customer options to buy and/or sell stocks
+
+		cout << "This is the update " << i << " of " << nb_rounds << " updates for today" << endl;
+		cout << "You are currently on day " <<  i/nb_days << " of " << nb_days << " days." << endl << endl;
+
+		cout << "Here is what the market looks like today: " << endl << endl;
+
+		stockMarket.printMarket();
+
+		cout << endl;
+		cout << "And here is your portfolio:" << endl << endl;
+
+		//Print the person's portfolio
+
+
+		cout << "Would you like to buy or sell today ? (y/n)" << endl;
+
+		cin >> userInput;
+
+		while(userInput != 'y' && userInput != 'n'){
+
+			cout << "This input is invalid, enter y or n" << endl;
+
+			cin >> userInput;
+		}
+
+		if(userInput == 'y'){
+
+			cout << "Great ! Would you like to buy or sell ? (b/s)" << endl;
+
+
+
+		} else if(userInput == 'n'){
+			cout << "Great, then let's skip a day and see tomorrow's stock market !" << endl;
+		}
+
+
+		//then we update the market prices
+
+		stockMarket.updateMarketPrices();
+
+
+		//Start a second day
+
+	}
+
+
+
+
+
 
 	return 0;
 }
