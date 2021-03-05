@@ -36,6 +36,7 @@ public:
 protected:
 	string name;
 	double price;
+	double oldPrice;
 	int quantity;
 };
 

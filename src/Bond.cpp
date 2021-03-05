@@ -46,7 +46,7 @@ void Bond::setYearDuration(const int &yearDuration) {
 
 
 void Bond::PrintForMarket() const{
-	cout << "Name: " << name << "; Price per bond: $" << price << "; Quantity available: " << quantity << endl;
+	cout << "Name: " << name << "; Price per bond: $" << price << "(" << (((price/oldPrice)-1)*100) << "%)" << "; Quantity available: " << quantity << endl;
 }
 
 double Bond::getFaceValue() const {

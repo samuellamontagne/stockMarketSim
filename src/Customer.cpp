@@ -5,6 +5,7 @@
 #include "Customer.h"
 #include "Stock.h"
 #include <typeinfo>
+#include "Bond.h"
 #include <iomanip>
 
 double Customer::getCash() const {
@@ -168,5 +169,22 @@ void Customer::setName(const string &name) {
     Customer::name = name;
 }
 
+vector<Bond*> Customer::bondsToBePaid(int n){
+	vector<Bond*> rtnBondList;
+	Bond* currBond;
 
+	for(Instruments* b : instrumentsHoldList){
+
+		if(typeid(*b) == typeid(Bond)){
+
+			currBond = (dynamic_cast<Bond*>(b));
+
+			if(currBond->getFrequenceOfPayInt() % n == 0){
+				rtnBondList.push_back(currBond);
+			}
+		}
+	}
+
+	return rtnBondList;
+}
 

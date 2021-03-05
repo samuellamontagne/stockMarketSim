@@ -43,6 +43,8 @@ public:
     double calculateAsset(const vector<struct Instruments *>& list) const;
 
     static Instruments * creatClassByString(const string& str);
+
+    vector<Bond*> bondsToBePaid(int n);
 };
 
 

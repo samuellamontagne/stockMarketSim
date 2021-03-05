@@ -42,6 +42,10 @@ public:
     bool addCustomerInMarket(Customer* customer);
 	Instruments* returnInstByName(string name);
 
+
+	// Return -1 if the stock name is not in the market. Returns 1 if it is
+	int checkForStockByName(string name);
+
 };
 
 #endif /* MARKET_H_ */

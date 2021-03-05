@@ -7,7 +7,7 @@
 
 #include "Instruments.h"
 
-Instruments::Instruments(string newName, double newPrice, int qte):name(newName), price(newPrice), quantity(qte) {}
+Instruments::Instruments(string newName, double newPrice, int qte):name(newName), price(newPrice), quantity(qte), oldPrice(price) {}
 
 
 
@@ -29,6 +29,7 @@ void Instruments::setName(const string &name) {
 }
 
 void Instruments::updatePrice(double newPrice){
+	oldPrice = price;
 	price = newPrice;
 }
 
