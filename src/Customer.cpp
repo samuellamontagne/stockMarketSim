@@ -150,11 +150,18 @@ void Customer::PrintInfo(const vector<struct Instruments *>& list) const {
                 break;
             }
         }
-
     }
 }
 
 Customer::Customer( const string &name) :  name(name) {}
+
+const string &Customer::getName() const {
+    return name;
+}
+
+void Customer::setName(const string &name) {
+    Customer::name = name;
+}
 
 
 

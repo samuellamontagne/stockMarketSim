@@ -48,3 +48,35 @@ void Market::printMarket(){
 		marketList.at(i)->PrintForMarket();
 	}
 }
+
+bool Market::addCustomerInMarket(Customer* custormer) {
+    for (Customer* c: customerList) {
+        if(c->getName()==custormer->getName()){
+            cout << "customer exit, Please get a new name;"<<endl;
+            return false;
+        }
+    }
+    customerList.push_back(custormer);
+    return true;
+}
+
+void Market::payInterestToCustomer( Bond* bond) {
+
+    for (Customer* c : customerList) {
+        for(Instruments* i:  c->getCustomerAccount()){
+           if(i->getName()==bond->getName()){
+               c->setCash(c->getCash()+i->getQuantity()*bond->getInterest()/100);
+           }
+        }
+    }
+
+}
+
+const vector<Customer *> &Market::getCustomerList() const {
+    return customerList;
+}
+
+void Market::setCustomerList(const vector<Customer *> &customerList) {
+    Market::customerList = customerList;
+}
+

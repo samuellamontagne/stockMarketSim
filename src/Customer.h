@@ -17,6 +17,11 @@ private:
     vector<Instruments*> customerAccount;  // hold vary  bond stock
     string name;
 public:
+    const string &getName() const;
+
+    void setName(const string &name);
+
+public:
     Customer(const string &name);
     const vector<Instruments *> &getCustomerAccount() const;
     void setCustomerAccount(const vector<Instruments *> &customerAccount);
