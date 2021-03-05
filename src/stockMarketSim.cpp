@@ -77,6 +77,10 @@ int main() {
     stockMarket.payInterestToCustomer(teslaBond);
     customer.PrintInfo(stockMarket.getMarketList());
 
+    customer.buy(teslaStock,20,50);
+
+    customer.PrintInfo(stockMarket.getMarketList());
+
 	cout << "Hi and welcome to our stock market simulation." << endl;
 
 	cout << "Tell me your name !" << endl;

@@ -27,7 +27,8 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
          // has this object
         for (auto & i : instrumentsHoldList) {
             if(i->getName() == instrument->getName()){
-                i->setQuantity(i->getQuantity()-volume);
+                i->updatePrice((i->getPrice()*i->getQuantity()+price*volume)/(volume+i->getQuantity()));
+                i->setQuantity(i->getQuantity()+volume);
                 return;
             }
         }
