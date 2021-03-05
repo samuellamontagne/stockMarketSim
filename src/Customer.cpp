@@ -144,7 +144,7 @@ Instruments* Customer::creatClassByString(const string& className) {
 void Customer::PrintInfo(const vector<struct Instruments *>& list) const {
     cout << "Customer: " << name << endl;
     cout << fixed << std::setprecision(2);
-    cout << "cash: \t$" << cash << endl << "asset: \t$" << asset <<endl<< "profit: $" << getProfit(list) <<endl;
+    cout << "cash: \t$" << cash << endl << "asset: \t$" << calculateAsset(list) <<endl<< "profit: $" << getProfit(list) <<endl;
     cout << "Name\t"  <<  "cost($)\t\t" <<  "value($)\t" << "volume\t\t" << "profit($)" <<endl;
     for (auto i : customerAccount) {
         for(auto j :list){
