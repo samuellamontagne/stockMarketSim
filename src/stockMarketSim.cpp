@@ -76,7 +76,14 @@ int main() {
     customer.buy(teslaStock,20,50);
 
     customer.PrintInfo(stockMarket.getMarketList());
-
+//    Bond* bb= nullptr;
+//    for(Instruments* i : stockMarket.getMarketList()){
+//        if(typeid(*i)== typeid(Bond)){
+//            bb=  (dynamic_cast<Bond*>(i));
+//            cout << " --------------------------";
+//            cout << bb->getFrequenceOfPayInt() << endl;
+//        }
+//    }
 
 
 

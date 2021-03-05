@@ -168,5 +168,19 @@ void Customer::setName(const string &name) {
     Customer::name = name;
 }
 
+//void Customer::TTA() {
+//    Bond* bb= nullptr;
+//    for(Instruments* i : instrumentsHoldList){
+//        if(typeid(*i)== typeid(Bond)){
+//            bb=  (dynamic_cast<Bond*>(i));
+//            cout << " --------------------------";
+//            cout << bb->getFrequenceOfPayInt() << endl;
+//        }
+//    }
+//    delete bb;
+//}
+
+
+
 
 
