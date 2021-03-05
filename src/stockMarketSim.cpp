@@ -33,9 +33,9 @@ int main() {
 	Bond* teslaBond = new Bond("TSLAB", 100.00, 10000);
 	teslaBond->setExpireDate("2025-03-06");
 	teslaBond->setFaceValue(100);
-	teslaBond->setInterest(0.5);
+	teslaBond->setInterest(2.5);
 	teslaBond->setYearDuration(4);
-	teslaBond->setFrequenceOfPayInt(1);
+	teslaBond->setFrequenceOfPayInt(2);
 	vector<Bond*> bondsToPay;
 
 
@@ -59,7 +59,9 @@ int main() {
     stockMarket.addInstrument(teslaBond);
     stockMarket.addInstrument(berkshireStock);
 
-
+/*
+ *
+ * This is all to test some functions
 	Customer customer("hello");
     stockMarket.addCustomerInMarket(&customer);
     customer.buy(teslaStock,10,100);
@@ -83,7 +85,7 @@ int main() {
 
     customer.PrintInfo(stockMarket.getMarketList());
 
-
+*/
 
 
 	cout << "Hi and welcome to our stock market simulation." << endl;
@@ -114,17 +116,18 @@ int main() {
 
 		stockMarket.printMarket();
 
+		bondsToPay = mainCustomer.bondsToBePaid(i+1);
+		for(size_t j = 0; j < bondsToPay.size(); j++){
+			stockMarket.payInterestToCustomer(bondsToPay.at(j));
+			cout << "Interest for bond: " << bondsToPay.at(j)->getName() << " has been paid !" << endl;
+			//Cash of the customer is not being updated (not bei)......
+		}
+
 		cout << endl;
 		cout << "And here is your portfolio:" << endl << endl;
 
 		//Print the person's portfolio
 		mainCustomer.PrintInfo(stockMarket.getMarketList());
-
-		bondsToPay = mainCustomer.bondsToBePaid(i+1);
-		for(int j = 0; j < bondsToPay.size(); j++){
-			stockMarket.payInterestToCustomer(bondsToPay.at(j));
-			cout << "Interest for bond: " << bondsToPay.at(j)->getName() << " has been paid !" << endl;
-		}
 
 
 		cout << endl;
