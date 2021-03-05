@@ -15,11 +15,15 @@ private:
     double cash=STARTING_CASH; // start money
     double asset=STARTING_CASH;
     vector<Instruments*> customerAccount;  // hold vary  bond stock
+    string name;
 public:
+    Customer(const string &name);
     const vector<Instruments *> &getCustomerAccount() const;
     void setCustomerAccount(const vector<Instruments *> &customerAccount);
-    double getProfile(const vector<struct Instruments *>& list) const;
+    double getProfit(const vector<struct Instruments *>& list) const;
+    double getProfit(const vector<struct Instruments *>& list , const string &instrName) const;
 
+    void PrintInfo(const vector<struct Instruments *>& list) const;
 
     void  sell(Instruments &instrument, double price, int quantity);
 
