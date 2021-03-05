@@ -7,7 +7,7 @@
 #include "Instruments.h"
 #include "Bond.h"
 #include <vector>
-#define STARTING_CASH 10000;
+#define STARTING_CASH 1000000;
 #define MARKET_PERCENTAGE 0.1
 
 class Customer {
