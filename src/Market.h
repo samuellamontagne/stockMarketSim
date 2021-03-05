@@ -31,6 +31,8 @@ public:
 
 	void printMarket();
 
+	Instruments* returnInstByName(string name);
+
 };
 
 #endif /* MARKET_H_ */
