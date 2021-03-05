@@ -17,6 +17,7 @@ void Customer::setCash(double cash) {
 
 
 void Customer::buy(Instruments* instrument, double price, int volume) {
+	volume = volume * (1 - MARKET_PERCENTAGE);
     if(price*volume <= cash) {
         cash-=price*volume;
         // on market side

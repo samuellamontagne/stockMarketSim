@@ -17,7 +17,7 @@
 #include <iomanip>
 
 
-#define MARKET_PERCENTAGE 0.1;
+
 //Example NB_DAY_SIM = 10 and Increment = 1, is 10 days incrementing every days
 //If you want to update 10x per day just change increment_sim 0.1
 #define NB_DAYS_SIM 10;   //
@@ -105,30 +105,30 @@ int main() {
 		mainCustomer.PrintInfo(stockMarket.getMarketList());
 
 		cout << endl;
-		cout << "Would you like to buy or sell today ? (y/n)" << endl;
 
-		cin >> userInput;
+		do{
 
-		while(userInput != 'y' && userInput != 'n'){
-
-			cout << "This input is invalid, enter 'y' to buy/sell or 'n' to skip a day" << endl;
+			cout << endl;
+			cout << "Menu: " << endl;
+			cout << "s - Sell Instruments" << endl;
+			cout << "b - Buy Instruments" << endl;
+			cout << "p - Print the Market" << endl;
+			cout << "c - Print your Portfolio" << endl;
+			cout << "q - Go to next update" << endl;
+			cout << "Choose an option: ";
 
 			cin >> userInput;
-		}
 
-		if(userInput == 'y'){
-
-			cout << "Great ! Would you like to buy or sell ? (b/s)" << endl;
-			while(userInput != 'b' && userInput != 's'){
-
-				cout << "This input is invalid, enter 'b' to buy or 's' to sell" << endl;
+			while(userInput != 's' && userInput != 'b' && userInput != 'p' && userInput != 'c' && userInput != 'q'){
+				cout << endl;
+				cout << "Choose an option: ";
 
 				cin >> userInput;
 			}
+			cout << endl << endl;
 
-			do{
-
-				if(userInput == 'b'){
+			switch(userInput){
+			case('b'):
 					//what instrument to buy
 
 					cout << "What instrument would you like to buy ?(Enter the name)" << endl;
@@ -143,9 +143,8 @@ int main() {
 					tempStock = stockMarket.returnInstByName(instrumentsName);
 
 					mainCustomer.buy(tempStock, tempStock->getPrice(), nbToUse);
-
-
-				} else if(userInput == 's'){
+					break;
+			case('s'):
 					//what instrument to sell
 					cout << "What instrument would you like to sell ?(Enter the name)" << endl;
 					cin >> instrumentsName;
@@ -159,35 +158,23 @@ int main() {
 					tempStock = stockMarket.returnInstByName(instrumentsName);
 
 					mainCustomer.sell(tempStock, tempStock->getPrice(), nbToUse);
-				}
+					break;
+			case('p'):
+					cout << "Here is what the market looks like today: " << endl << endl;
 
-				//Want to buy or sell again ?
-				cout << "Do you want to buy or sell again ? (y/n)" << endl;
-				while(userInput != 'y' && userInput != 'n'){
+					stockMarket.printMarket();
+					break;
+			case('c'):
+					cout << "Here is your portfolio:" << endl << endl;
 
-					cout << "This input is invalid, enter 'y' to buy/sell or 'n' to skip a day" << endl;
+					//Print the person's portfolio
+					mainCustomer.PrintInfo(stockMarket.getMarketList());
+					break;
+			case('q'):
+					cout << "Great, then let's skip a day and see tomorrow's stock market !" << endl;
+			}
 
-					cin >> userInput;
-				}
-
-				if(userInput == 'y'){
-					cout << "Great ! Would you like to buy or sell ? (b/s)" << endl;
-					while(userInput != 'b' && userInput != 's'){
-
-						cout << "This input is invalid, enter 'b' to buy or 's' to sell" << endl;
-
-						cin >> userInput;
-					}
-				}
-
-
-			}while(userInput == 'b' || userInput == 's');
-
-
-		} else if(userInput == 'n'){
-			cout << "Great, then let's skip a day and see tomorrow's stock market !" << endl;
-		}
-
+		}while(userInput != 'q');
 
 		//then we update the market prices
 
@@ -197,6 +184,7 @@ int main() {
 
 
 		//Start a second day
+
 
 	}
 
