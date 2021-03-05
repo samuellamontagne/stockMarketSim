@@ -30,9 +30,9 @@ public:
 
     void setCash(double cash);
 
-    static double getCurrentPrice(Instruments *instrument);
-
     double calculateAsset(vector<struct Instruments *> list) const;
+
+    static Instruments * creatClassByString(string str);
 };
 
 

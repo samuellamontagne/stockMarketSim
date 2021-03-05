@@ -8,7 +8,7 @@ add_executable(stockMarketSim
         src/Instruments.cpp        src/Instruments.h
         src/Stock.cpp src/Stock.h
         src/stockMarketSim.cpp
-
+        src/Market.h src/Market.cpp
         src/Player.cpp src/Player.h
 
         )

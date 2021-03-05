@@ -12,8 +12,9 @@
 #include "Stock.h"
 #include "Bond.h"
 #include "Market.h"
+#include "Player.h"
+#include <typeinfo>
 
-#define STARTING_CASH 100;   // init start money 100
 #define MARKET_PERCENTAGE 0.1;
 //Example NB_DAY_SIM = 10 and Increment = 1, is 10 days incrementing every days
 //If you want to update 10x per day just change increment_sim 0.1
@@ -26,26 +27,43 @@ using namespace std;
 
 int main() {
 
-	Stock* teslaStock = new Stock("TSLA", 10.00, 500);
-	Bond* teslaBond = new Bond("TSLAB", 10.00, 500);
+	Stock* teslaStock = new Stock("TSLA", 10.00, 5000000);
+	Bond* teslaBond = new Bond("TSLAB", 10.00, 5000000);
 
-	Stock* berkshireStock = new Stock("BRK", 25.00, 1000);
+	Stock* berkshireStock = new Stock("BRK", 25.00, 5000000);
+
 
 	Market stockMarket;
 
+    stockMarket.addInstrument(teslaStock);
+    stockMarket.addInstrument(teslaBond);
+    stockMarket.addInstrument(berkshireStock);
+
 	string playerName;
 
-	stockMarket.addInstrument(teslaStock);
-	stockMarket.addInstrument(teslaBond);
-	stockMarket.addInstrument(berkshireStock);
 
-	cout << "Hi and welcome to our stock market simulation." << endl;
+	Player player;
+    player.buy(teslaStock,10,100);
+	cout << "current cash:"<<player.getCash() << endl;
+	cout << "current asset:"<<player.calculateAsset(stockMarket.getMarketList()) << endl;
+	cout << "current profit:"<<player.getProfile(stockMarket.getMarketList()) << endl;
+	cout << "current tesla volume:"<<teslaStock->getQuantity() << endl;
 
-	cout << "What is your name ?" << endl;
+	teslaStock->updatePrice(20);
 
-	cin >> playerName;
+    cout << "current cash:"<<player.getCash() << endl;
+    cout << "current asset:"<<player.calculateAsset(stockMarket.getMarketList()) << endl;
+    cout << "current profit:"<<player.getProfile(stockMarket.getMarketList()) << endl;
 
-	cout << "Hi, " << playerName << endl;
+
+//
+//	cout << "Hi and welcome to our stock market simulation." << endl;
+//
+//	cout << "What is your name ?" << endl;
+//
+//	cin >> playerName;
+//
+//	cout << "Hi, " << playerName << endl;
 	//RELOOK AT THIS LINE
 	//cout << "This simulation will last " << NB_DAYS_SIM << "days and will be updated " << 1/INCREMENT_SIM << " times per day." << endl;
 

@@ -3,7 +3,8 @@
 //
 
 #include "Player.h"
-
+#include "Stock.h"
+#include <typeinfo>
 
 double Player::getCash() const {
     return cash;
@@ -14,23 +15,35 @@ void Player::setCash(double cash) {
 }
 
 
-void Player::buy(Instruments* instrument, double price, int quantity) {
-    if(price*quantity <= cash) {
-        cash-=price*quantity;
+void Player::buy(Instruments* instrument, double price, int volume) {
+    if(price*volume <= cash) {
+        cash-=price*volume;
         // on market side
-        instrument->setQuantity(instrument->getQuantity()-quantity);
+
+
+        instrument->setQuantity(instrument->getQuantity()-volume);
         // on player side
          // has this object
         for (auto & i : playerAccount) {
             if(i->getName() == instrument->getName()){
-                i->setQuantity(i->getQuantity()-quantity);
+                i->setQuantity(i->getQuantity()-volume);
                 return;
             }
         }
         //no has this object
-        Instruments* it = instrument;
-        it->setQuantity(quantity);
+        string temp1=(typeid(*instrument).name());
+        string result;
+        for(char c : temp1){
+            if( isalpha(c)){
+                result+=tolower(c);
+            }
+        }
+        Instruments* it =  creatClassByString(result);
+        Instruments* tt =  &*instrument;
+
+        it->setQuantity(volume);
         it->updatePrice(price);
+        it->setName(instrument->getName());
         playerAccount.push_back(it);
     }else{
         cout << "not enough cash;" <<endl;
@@ -39,18 +52,18 @@ void Player::buy(Instruments* instrument, double price, int quantity) {
 
 
 
-void Player::sell(Instruments &instrument, double price, int quantity) {
+void Player::sell(Instruments &instrument, double price, int volume) {
     for (int i =0 ;i < playerAccount.size();i++) {
         if(playerAccount.at(i)->getName() == instrument.getName() ){
             // if player have enough quantity player could sell
-            if(playerAccount.at(i)->getQuantity() > quantity){  // still have this object
-                instrument.setQuantity(instrument.getQuantity()+quantity);
-                playerAccount.at(i)->setQuantity(playerAccount.at(i)->getQuantity()-quantity);
-                cash+=price*quantity;
+            if(playerAccount.at(i)->getQuantity() > volume){  // still have this object
+                instrument.setQuantity(instrument.getQuantity()+volume);
+                playerAccount.at(i)->setQuantity(playerAccount.at(i)->getQuantity()-volume);
+                cash+=price*volume;
                 break;
-            } else if(playerAccount.at(i)->getQuantity() == quantity){ // not have this stock
+            } else if(playerAccount.at(i)->getQuantity() == volume){ // not have this stock
                 playerAccount.erase(playerAccount.begin()+i);  // remove from playerAccount
-                cash+=price*quantity;
+                cash+=price*volume;
                 break;
             }
             else {
@@ -99,7 +112,13 @@ double Player::getProfile(const vector<struct Instruments *> list) const {
 
 }
 
-
+Instruments* Player::creatClassByString(string str) {
+    if(str=="stock"){
+        return new Stock("none",1.0,1);
+    }else if(str== "bond"){
+        return new Bond("none",1.0,1);
+    }
+}
 
 
 
