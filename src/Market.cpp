@@ -91,3 +91,17 @@ Instruments* Market::returnInstByName(string name){
 	}
 	return toSend;
 }
+
+int Market::checkForStockByName(string name){
+	int rtn = -1;
+	for(size_t i = 0; i < marketList.size(); i++){
+			if(marketList.at(i)->getName() == name){
+				rtn = 1;
+				break;
+			}
+		}
+		return rtn;
+}
+
+
+

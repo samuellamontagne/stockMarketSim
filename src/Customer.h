@@ -23,13 +23,11 @@ public:
 
     void setName(const string &name);
 
+public:
     Customer(const string &name);
     const vector<Instruments *> &getInstrumentsHoldList() const;
-
     void setInstrumentsHoldList(const vector<Instruments *> &InstrumentsHoldList);
-
     double getProfit(const vector<struct Instruments *>& list) const;
-
     double getProfit(const vector<struct Instruments *>& list , const string &instrName) const;
 
     void PrintInfo(const vector<struct Instruments *>& list) const;
@@ -46,7 +44,7 @@ public:
 
     static Instruments * creatClassByString(const string& str);
 
-
+    vector<Bond*> bondsToBePaid(int n);
 };
 
 

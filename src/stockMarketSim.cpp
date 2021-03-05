@@ -35,7 +35,8 @@ int main() {
 	teslaBond->setFaceValue(100);
 	teslaBond->setInterest(0.5);
 	teslaBond->setYearDuration(4);
-	teslaBond->setFrequenceOfPayInt(2);
+	teslaBond->setFrequenceOfPayInt(1);
+	vector<Bond*> bondsToPay;
 
 
 	Stock* berkshireStock = new Stock("BRK", 25.00, 5000000);
@@ -70,6 +71,7 @@ int main() {
 
     customer.PrintInfo(stockMarket.getMarketList());
     customer.buy(teslaBond,100,50);
+    customer.PrintInfo(stockMarket.getMarketList());
     stockMarket.payInterestToCustomer(teslaBond);
     customer.PrintInfo(stockMarket.getMarketList());
 
@@ -97,7 +99,7 @@ int main() {
 
 	Customer mainCustomer(customerName);
 
-
+	stockMarket.addCustomerInMarket(&mainCustomer);
 
 	cout << "This simulation will last " << nb_days << " days and will be updated " << nb_increments << " times per day." << endl << endl;
 	//Every chunk of time for all the chunks of time (NB_DAYS_SIM/INCREMENT_SIM)
@@ -109,7 +111,7 @@ int main() {
 		//We give the customer options to buy and/or sell stocks
 
 		cout << "This is the update " << i << " of " << nb_rounds << " updates for today" << endl;
-		cout << "You are currently on day " <<  i/nb_days << " of " << nb_days << " days." << endl << endl;
+		cout << "There are " <<  nb_days-i << " left." << endl << endl;
 
 		cout << "Here is what the market looks like today: " << endl << endl;
 
@@ -120,6 +122,12 @@ int main() {
 
 		//Print the person's portfolio
 		mainCustomer.PrintInfo(stockMarket.getMarketList());
+
+		bondsToPay = mainCustomer.bondsToBePaid(i+1);
+		for(int j = 0; j < bondsToPay.size(); j++){
+			stockMarket.payInterestToCustomer(bondsToPay.at(j));
+			cout << "Interest for bond: " << bondsToPay.at(j)->getName() << " has been paid !" << endl;
+		}
 
 
 		cout << endl;
@@ -151,6 +159,11 @@ int main() {
 
 					cout << "What instrument would you like to buy ?(Enter the name)" << endl;
 					cin >> instrumentsName;
+
+					while(stockMarket.checkForStockByName(instrumentsName) == -1){
+						cout << "This stock is not in the market ! Enter a new name." << endl;
+						cin >> instrumentsName;
+					}
 
 					//how much to buy
 

@@ -23,5 +23,5 @@ Stock::Stock(string newName, double newPrice, int qte) : Instruments(newName, ne
 
 
 void Stock::PrintForMarket() const{
-	cout << "Name: " << name << "; Price per stock: $" << price << "; Quantity available: " << quantity << endl;
+	cout << "Name: " << name << "; Price per stock: $" << price << "(" << (((price/oldPrice)-1)*100) << "%)" << "; Quantity available: " << quantity << endl;
 }
