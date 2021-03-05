@@ -5,6 +5,7 @@
 #include "Customer.h"
 #include "Stock.h"
 #include <typeinfo>
+#include <iomanip>
 
 double Customer::getCash() const {
     return cash;
@@ -32,13 +33,13 @@ void Customer::buy(Instruments* instrument, double price, int volume) {
         }
         //no has this object
         string temp1=(typeid(*instrument).name());
-        string result;
+        string className;
         for(char c : temp1){
             if( isalpha(c)){
-                result+=tolower(c);
+                className+=tolower(c);
             }
         }
-        Instruments* it =  creatClassByString(result);
+        Instruments* it =  creatClassByString(className);
         it->setQuantity(volume);
         it->updatePrice(price);
         it->setName(instrument->getName());
@@ -73,15 +74,15 @@ void Customer::sell(Instruments &instrument, double price, int volume) {
     }
 }
 
-const vector<Instruments *> &Customer::getcustomerAccount() const {
+const vector<Instruments *> &Customer::getCustomerAccount() const {
     return customerAccount;
 }
 
-void Customer::setcustomerAccount(const vector<Instruments *> &list) {
+void Customer::setCustomerAccount(const vector<Instruments *> &list) {
     Customer::customerAccount = list;
 }
 
-double Customer::calculateAsset(const vector<struct Instruments *> list) const {
+double Customer::calculateAsset(const vector<struct Instruments *>& list) const {
     if(customerAccount.empty()){
         return cash;
     }else{
@@ -101,22 +102,59 @@ double Customer::calculateAsset(const vector<struct Instruments *> list) const {
 
 
 
-double Customer::getProfile(const vector<struct Instruments *> list) const {
+double Customer::getProfit(const vector<struct Instruments *>& list) const {
     if(customerAccount.empty()){
        return cash-STARTING_CASH;
     }else{
       return  calculateAsset(list)-STARTING_CASH;
     }
-
 }
 
-Instruments* Customer::creatClassByString(string str) {
-    if(str=="stock"){
+
+double Customer::getProfit(const vector<struct Instruments *>& list , const string &instrName) const {
+
+    if(customerAccount.empty()){
+        return 0;
+    }else{
+        for(auto i :customerAccount){
+           if(i->getName() ==instrName){
+               for(auto j :list){
+                   if(j->getName() ==instrName){
+                       return  (j->getPrice()-i->getPrice())*i->getQuantity();
+                   }
+               }
+           }
+        }
+        return  0;
+    }
+}
+
+
+Instruments* Customer::creatClassByString(const string& className) {
+    if(className=="stock"){
         return new Stock("none",1.0,1);
-    }else if(str== "bond"){
+    }else if(className== "bond"){
         return new Bond("none",1.0,1);
     }
 }
+
+void Customer::PrintInfo(const vector<struct Instruments *>& list) const {
+    cout << "Customer: " << name << endl;
+    cout << fixed << std::setprecision(2);
+    cout << "cash: \t$" << cash << endl << "asset: \t$" << asset <<endl<< "profit: $" << getProfit(list) <<endl;
+    cout << "Name\t"  <<  "cost($)\t\t" <<  "value($)\t" << "volume\t\t" << "profit($)" <<endl;
+    for (auto i : customerAccount) {
+        for(auto j :list){
+            if(j->getName() ==i->getName()){
+                cout << i->getName()+"\t"<<i->getPrice()<<"\t\t"<<j->getPrice()<<"\t\t"<< i->getQuantity()<<"\t\t" << getProfit(list,i->getName())<<"\t" <<endl;
+                break;
+            }
+        }
+
+    }
+}
+
+Customer::Customer( const string &name) :  name(name) {}
 
 
 

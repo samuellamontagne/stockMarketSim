@@ -16,6 +16,7 @@
 #include <typeinfo>
 #include <iomanip>
 
+
 #define MARKET_PERCENTAGE 0.1;
 //Example NB_DAY_SIM = 10 and Increment = 1, is 10 days incrementing every days
 //If you want to update 10x per day just change increment_sim 0.1
@@ -45,21 +46,22 @@ int main() {
     stockMarket.addInstrument(teslaBond);
     stockMarket.addInstrument(berkshireStock);
 
-	string customerName;
 
-
-	Customer customer;
+	Customer customer("hello");
     customer.buy(teslaStock,10,100);
 	cout << "current cash:"<<customer.getCash() << endl;
 	cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
-	cout << "current profit:"<<customer.getProfile(stockMarket.getMarketList()) << endl;
+	cout << "current profit:"<<customer.getProfit(stockMarket.getMarketList()) << endl;
 	cout << "current tesla volume:"<<teslaStock->getQuantity() << endl;
 
 	teslaStock->updatePrice(20);
 
     cout << "current cash:"<<customer.getCash() << endl;
     cout << "current asset:"<<customer.calculateAsset(stockMarket.getMarketList()) << endl;
-    cout << "current profit:"<<customer.getProfile(stockMarket.getMarketList()) << endl;
+    cout << "current profit:"<<customer.getProfit(stockMarket.getMarketList()) << endl;
+
+
+    customer.PrintInfo(stockMarket.getMarketList());
 
 
 	cout << "Hi and welcome to our stock market simulation." << endl;

@@ -11,7 +11,7 @@ Market::Market() {
 }
 
 Market::~Market() {
-	for(size_t i; i < marketList.size(); i++){
+	for(size_t i=0; i < marketList.size(); i++){
 		delete marketList.at(i);
 	}
 }
@@ -39,8 +39,8 @@ const vector<Instruments *> &Market::getMarketList() const {
 	return marketList;
 }
 
-void Market::setMarketList(const vector<Instruments *> &marketList) {
-	Market::marketList = marketList;
+void Market::setMarketList(const vector<Instruments *> &list) {
+	Market::marketList = list;
 }
 
 void Market::printMarket(){

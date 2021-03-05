@@ -8,7 +8,6 @@
 #include "Bond.h"
 #include <vector>
 #define STARTING_CASH 10000;
-
 class Customer {
 
 
@@ -16,11 +15,15 @@ private:
     double cash=STARTING_CASH; // start money
     double asset=STARTING_CASH;
     vector<Instruments*> customerAccount;  // hold vary  bond stock
+    string name;
 public:
-    const vector<Instruments *> &getcustomerAccount() const;
-    void setcustomerAccount(const vector<Instruments *> &customerAccount);
-    double getProfile(vector<struct Instruments *> list) const;
+    Customer(const string &name);
+    const vector<Instruments *> &getCustomerAccount() const;
+    void setCustomerAccount(const vector<Instruments *> &customerAccount);
+    double getProfit(const vector<struct Instruments *>& list) const;
+    double getProfit(const vector<struct Instruments *>& list , const string &instrName) const;
 
+    void PrintInfo(const vector<struct Instruments *>& list) const;
 
     void  sell(Instruments &instrument, double price, int quantity);
 
@@ -30,9 +33,9 @@ public:
 
     void setCash(double cash);
 
-    double calculateAsset(vector<struct Instruments *> list) const;
+    double calculateAsset(const vector<struct Instruments *>& list) const;
 
-    static Instruments * creatClassByString(string str);
+    static Instruments * creatClassByString(const string& str);
 };
 
 
